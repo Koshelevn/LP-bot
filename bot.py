@@ -2,7 +2,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import config
 import ephem
-
+import datetime
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     handlers=[logging.FileHandler('bot.log', 'w+', 'utf-8')] 
@@ -18,7 +18,7 @@ def get_constellation(bot, update):
 	try:
 		func = getattr(ephem, planet)
 		text = f"Поиск созвездия планеты {planet}"
-		update.message.reply_text(ephem.constellation(func(2019))[1])
+		update.message.reply_text(ephem.constellation(func(datetime.datetime.now()))[1])
 	except AttributeError:
 		update.message.reply_text("Не такой планеты в ephem")
 	except TypeError:
